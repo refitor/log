@@ -8,7 +8,7 @@ Minimalist log unified interface library. Supports quick access to third-party l
 package main
 
 import (
-    "github.com/refitself/rslog"
+    "github.com/refitor/rslog"
 )
 
 func main() {
