@@ -23,9 +23,12 @@ func New() *sysLog {
 	}
 }
 
-func (p *sysLog) SetDepth(depth int) {
+func (p *sysLog) SetDepth(depth int) int {
+	oldDepth := p.depth
 	p.depth = depth
+	return oldDepth
 }
+
 
 func (p *sysLog) print(level string, fprintf func(string, ...interface{}), datas ...interface{}) {
 	if getLogLevel(level) > getLogLevel(p.level) {

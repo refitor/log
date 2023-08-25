@@ -20,7 +20,7 @@ type i_log interface {
 	Errorf(format string, datas ...interface{})
 
 	SetLevel(l string)
-	SetDepth(depth int)
+	SetDepth(depth int) int
 	ResetLog(l interface{})
 }
 
@@ -56,8 +56,8 @@ func Errorf(format string, datas ...interface{}) {
 	v_logger.Errorf(format, datas...)
 }
 
-func SetDepth(depth int) {
-	v_logger.SetDepth(depth)
+func SetDepth(depth int) int {
+	return v_logger.SetDepth(depth)
 }
 
 func SetLevel(l string) {

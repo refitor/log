@@ -72,8 +72,10 @@ func (p *zapLog) Errorf(format string, datas ...interface{}) {
 	p.sugarLog.Errorf(format, datas...)
 }
 
-func (p *zapLog) SetDepth(depth int) {
+func (p *zapLog) SetDepth(depth int) int {
+	oldDepth := p.depth
 	p.depth = depth
+	return oldDepth
 }
 
 func (p *zapLog) SetLevel(l string) {
