@@ -20,6 +20,7 @@ type i_log interface {
 	Errorf(format string, datas ...interface{})
 
 	SetLevel(l string)
+	SetDepth(depth int)
 	ResetLog(l interface{})
 }
 
