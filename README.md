@@ -8,21 +8,22 @@ Minimalist log unified interface library. Supports quick access to third-party l
 package main
 
 import (
-    "github.com/refitor/rslog"
+	"github.com/refitor/rslog"
 )
 
 func main() {
-    // rslog.UseLog(rslog.C_Log_Zap)
-    
-    //// reset zap logger
-    // fileWriter := rslog.GetWriter(logFile, 30)
-    // core := zapcore.NewCore(
-    //     zapcore.NewJSONEncoder(rslog.ZapNewEncoderConfig()),
-    //     // zapcore.NewConsoleEncoder(rslog.ZapNewEncoderConfig()),
-    //     zapcore.NewMultiWriteSyncer(os.Stdout, zapcore.AddSync(fileWriter)),
-    //     zap.NewAtomicLevelAt(zapcore.InfoLevel),
-    // )
-    // rslog.ResetZapLog(zap.New(core, zap.AddCaller()))
+	// // zap log
+    // rslog.UseLog(zap.New())
+	
+    // // zap log with file
+	// fileWriter := zap.GetZapWriter("demo.log", 30)
+	// core := zapcore.NewCore(
+	// 	zapcore.NewJSONEncoder(zap.ZapNewEncoderConfig()),
+	// 	// zapcore.NewConsoleEncoder(rslog.ZapNewEncoderConfig()),
+	// 	zapcore.NewMultiWriteSyncer(os.Stdout, zapcore.AddSync(fileWriter)),
+	// 	zaplog.NewAtomicLevelAt(zapcore.InfoLevel),
+	// )
+	// rslog.ResetLog(zaplog.New(core, zaplog.AddCaller()))
 
     rslog.Info("test Info")
     rslog.Infof("test Infof: %s", "hello log")
@@ -30,8 +31,8 @@ func main() {
     rslog.Debug("test Debug")
     rslog.Debugf("test Debugf: %s", "hello log")
 
-    rslog.Warning("test Warning")
-    rslog.Warningf("test Warningf: %s", "hello log")
+    rslog.Warn("test Warning")
+    rslog.Warnf("test Warningf: %s", "hello log")
 
     rslog.Error("test Error")
     rslog.Errorf("test Errorf: %s", "hello log")

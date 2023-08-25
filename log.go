@@ -1,9 +1,27 @@
 package rslog
 
-const (
-	C_Log_Sys = "sys"
-	C_Log_Zap = "zap"
+import (
+	"github.com/refitor/rslog/sys"
 )
+
+var v_logger i_log = sys.New()
+
+type i_log interface {
+	Info(datas ...interface{})
+	Infof(format string, datas ...interface{})
+
+	Debug(datas ...interface{})
+	Debugf(format string, datas ...interface{})
+
+	Warn(datas ...interface{})
+	Warnf(format string, datas ...interface{})
+
+	Error(datas ...interface{})
+	Errorf(format string, datas ...interface{})
+
+	SetLevel(l string)
+	ResetLog(l interface{})
+}
 
 func Info(datas ...interface{}) {
 	v_logger.Info(datas...)
@@ -38,9 +56,6 @@ func Errorf(format string, datas ...interface{}) {
 }
 
 func SetLevel(l string) {
-	if getLogLevel(l) != 0 {
-		v_level = l
-	}
 	v_logger.SetLevel(l)
 }
 
@@ -48,19 +63,9 @@ func ResetLog(l interface{}) {
 	v_logger.ResetLog(l)
 }
 
-func init() {
-	UseLog(C_Log_Sys)
-}
-
-func UseLog(name string) {
-	if name == "" {
-		name = C_Log_Zap
+func UseLog(l i_log) {
+	if l == nil {
+		l = sys.New()
 	}
-
-	switch name {
-	case C_Log_Sys:
-		v_logger = newSysLog(C_Log_Sys)
-	case C_Log_Zap:
-		v_logger = newZapLog()
-	}
+	v_logger = l
 }

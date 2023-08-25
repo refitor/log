@@ -1,4 +1,4 @@
-package rslog
+package sys
 
 import (
 	"fmt"
@@ -28,28 +28,6 @@ const (
 	c_LOG_LEVEL_DEBUG = c_LOG_LEVEL_INFO | t_LogLevel(c_LOG_DEBUG)
 	c_LOG_LEVEL_ALL   = c_LOG_LEVEL_DEBUG
 )
-
-var (
-	v_level  string
-	v_logger i_log
-)
-
-type i_log interface {
-	Info(datas ...interface{})
-	Infof(format string, datas ...interface{})
-
-	Debug(datas ...interface{})
-	Debugf(format string, datas ...interface{})
-
-	Warn(datas ...interface{})
-	Warnf(format string, datas ...interface{})
-
-	Error(datas ...interface{})
-	Errorf(format string, datas ...interface{})
-
-	SetLevel(l string)
-	ResetLog(l interface{})
-}
 
 func stackTrace(depth int) string {
 	_, file, line, ok := runtime.Caller(depth)

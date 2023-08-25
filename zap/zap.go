@@ -1,4 +1,4 @@
-package rslog
+package zap
 
 import (
 	"io"
@@ -6,18 +6,18 @@ import (
 	"time"
 
 	rotatelogs "github.com/lestrrat-go/file-rotatelogs"
-	"go.uber.org/zap"
+	zaplog "go.uber.org/zap"
 	"go.uber.org/zap/zapcore"
 )
 
 type zapLog struct {
-	logger *zap.Logger
+	logger *zaplog.Logger
 
 	level    string
-	sugarLog *zap.SugaredLogger
+	sugarLog *zaplog.SugaredLogger
 }
 
-func newZapLog() *zapLog {
+func New() *zapLog {
 	p := &zapLog{}
 
 	p.logger = initZapLog(zapcore.InfoLevel)
@@ -26,14 +26,14 @@ func newZapLog() *zapLog {
 	return p
 }
 
-func initZapLog(l zapcore.Level) *zap.Logger {
+func initZapLog(l zapcore.Level) *zaplog.Logger {
 	core := zapcore.NewCore(
 		// zapcore.NewJSONEncoder(ZapNewEncoderConfig()),
 		zapcore.NewConsoleEncoder(ZapNewEncoderConfig()),
 		zapcore.NewMultiWriteSyncer(os.Stdout),
 		l,
 	)
-	return zap.New(core, zap.AddCaller())
+	return zaplog.New(core, zaplog.AddCaller())
 }
 
 func (p *zapLog) Info(datas ...interface{}) {
@@ -73,7 +73,7 @@ func (p *zapLog) SetLevel(l string) {
 	p.sugarLog = p.logger.Sugar()
 }
 func (p *zapLog) ResetLog(l interface{}) {
-	if logger, ok := l.(*zap.Logger); ok {
+	if logger, ok := l.(*zaplog.Logger); ok {
 		p.logger = logger
 		p.sugarLog = p.logger.Sugar()
 	}
