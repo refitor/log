@@ -56,6 +56,10 @@ func Errorf(format string, datas ...interface{}) {
 	v_logger.Errorf(format, datas...)
 }
 
+func SetDepth(depth int) {
+	v_logger.SetDepth(depth)
+}
+
 func SetLevel(l string) {
 	v_logger.SetLevel(l)
 }
