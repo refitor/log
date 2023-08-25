@@ -14,11 +14,15 @@ type zapLog struct {
 	logger *zaplog.Logger
 
 	level    string
+	depth    int
 	sugarLog *zaplog.SugaredLogger
 }
 
 func New() *zapLog {
-	p := &zapLog{}
+	p := &zapLog{
+		level: "info",
+		depth: 4,
+	}
 
 	p.logger = initZapLog(zapcore.InfoLevel)
 	p.sugarLog = p.logger.Sugar()
@@ -68,8 +72,12 @@ func (p *zapLog) Errorf(format string, datas ...interface{}) {
 	p.sugarLog.Errorf(format, datas...)
 }
 
+func (p *zapLog) SetDepth(depth int) {
+	p.depth = depth
+}
+
 func (p *zapLog) SetLevel(l string) {
-	p.logger = initZapLog(GetZapLevel(l))
+	p.logger = initZapLog(getZapLevel(l))
 	p.sugarLog = p.logger.Sugar()
 }
 func (p *zapLog) ResetLog(l interface{}) {
@@ -86,7 +94,7 @@ func (p *zapLog) ResetLog(l interface{}) {
 // "dpanic": zapcore.DPanicLevel,
 // "panic": zapcore.PanicLevel,
 // "fatal": zapcore.FatalLevel,
-func GetZapLevel(l string) zapcore.Level {
+func getZapLevel(l string) zapcore.Level {
 	switch l {
 	case "info":
 		return zapcore.InfoLevel

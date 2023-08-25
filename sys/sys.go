@@ -10,14 +10,21 @@ import (
 type sysLog struct {
 	level string
 
+	depth int
+
 	logger *log.Logger
 }
 
 func New() *sysLog {
 	return &sysLog{
 		level:  "info",
+		depth:  4,
 		logger: log.New(os.Stdout, "", log.LstdFlags),
 	}
+}
+
+func (p *sysLog) SetDepth(depth int) {
+	p.depth = depth
 }
 
 func (p *sysLog) print(level string, fprintf func(string, ...interface{}), datas ...interface{}) {

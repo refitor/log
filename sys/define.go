@@ -34,7 +34,7 @@ func stackTrace(depth int) string {
 	if !ok {
 		return ""
 	}
-	strFileLine := "[" + filepath.Base(file) + fmt.Sprintf(":%d", line) + "]"
+	strFileLine := fmt.Sprintf("[%s %s:%v]", filepath.Base(filepath.Dir(file)), filepath.Base(file), line)
 	return strFileLine
 }
 
